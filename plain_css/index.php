@@ -7,8 +7,11 @@
 	<link rel="stylesheet" type="text/css" href="./css/nav.css">
 </head>
 <body>
+
 <div class="sad-nav">
-	<?php generateNavigationBar(); ?>
+	<ul class="topnav" id="topnav">
+		<?php generateNavigationBar(); ?>
+	</ul>
 </div>
 
 	<ul>

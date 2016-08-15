@@ -56,36 +56,43 @@ class Node {
 }
 
 
-function generate($node) {
-	if (!is_array($node)) {			
-		if ($node->hasChild()) {
-			echo '<li>'. $node->title . '</li>';
-			echo '<ul>';
-				generate($node->getChildren());
-			echo '</ul>';
-		}else {
-			echo '<li>'. $node->title . '</li>';
-		}
-	} else {
-		foreach ($node as $n) {
-			generate($node);
-		}
-	}
-}
+class HtmlNav {
+	public $config = array();
 
-function generate2($node) {
-	if ($node->hasChild()) {
-		echo '<li>';
-		echo $node->title;
-		echo '<ul>';
-		foreach ($node->getChildren() as $n) {
-			generate2($n);
-		}				
-		echo '</ul>';
-		echo '</li>';
-	}else {
-		echo '<li>' . $node->title . '</li>';
+	public function __construct() {
+		$this->config = array(
+			'li_with_child_prefix' => '<li>',
+			'li_with_child_postfix' => '</li>',
+			'child_ul_prefix' => '<ul>',
+			'child_ul_postfix' => '</ul>',
+			'li_no_child_prefix' =>'<li>',
+			'li_with_child_postfix' => '</li>',
+		);
 	}
+
+	function generate($node, $node_type = 0) {
+		if ($node->hasChild()) {
+			if ($node->pid == 0) {//without father//root//first level li
+				echo $this->config['li_with_child_no_father_open']($node);
+			} else {
+				echo $this->config['li_with_child_with_father_open']($node);
+			}
+
+			echo $this->config['child_ul_open']($node);
+			foreach ($node->getChildren() as $n) {
+				$this->generate($n, 1);
+			}				
+			echo $this->config['child_ul_close']($node);
+			if ($node->pid == 0) {//without father//root//first level li
+				echo $this->config['li_with_child_no_father_close']($node);
+			} else {
+				echo $this->config['li_with_child_with_father_close']($node);
+			}	
+		}else {
+			echo $this->config['li_no_child_open']($node);
+		}
+	}
+
 }
 ?>
 
@@ -102,24 +109,64 @@ function shit() {
 	foreach($nodes as $node) {
 		foreach($nodes as $child) {
 			if ($node->id == $child->pid) {
-				//echo $node->id . ' == ' . $child->pid . ', '. $node->title . ',' . $child->title . '<br />';
 				$node->addToChildren($child);
 			}
 		}
 	}
 	
-/*	
-	foreach($nodes as $node) {
-		echo $node->title . ', ' . count($node->children) . '<br />';
-	}
-	*/
+
 	echo '<ul>';
+	
+
+
+	$nav = new HtmlNav();
+
+	$nav->config = array(
+			'li_with_child_no_father_open' => function($node) {
+				$result = '<li><a href="#" >';
+				$result .= $node->title;
+				$result .= '</a>';
+				return $result;
+			},
+			'li_with_child_no_father_close' => function($node) {
+				$result = '</li>';
+				return $result;
+			},
+			'li_with_child_with_father_open' => function($node) {
+				$result = '<li ><a href="#">';
+				$result .= $node->title;
+				$result .= '</a>';
+				return $result;
+			},
+			'li_with_child_with_father_close' => function($node) {
+				$result = '</li>';
+				return $result;
+			},	
+			'child_ul_open' => function($node) {
+				$result = '<ul >';
+				return $result;
+			},
+			'child_ul_close' => function($node) {
+				$result = '</ul>';
+				return $result;
+			},	
+			'li_no_child_open' => function($node) {
+				$result = '<li><a href="#">';
+				$result .= $node->title;
+				$result .= '</a></li>';
+				return $result;
+			},
+
+
+		);
+
+
 	
 	foreach ($nodes as $node) {
 		if ($node->pid == 0) {
-			generate2($node);
+			$nav->generate($node);
 		}
-	}
+	}	
 	
 	echo '</ul>';
 	

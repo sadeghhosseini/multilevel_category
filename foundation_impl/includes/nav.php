@@ -1,6 +1,8 @@
 <?php
 
-
+/**
+*Returns all the columns from category table
+*/
 function db() {
 	$servername = "localhost";
 	$username = "root"; 
@@ -55,6 +57,7 @@ class Node {
 		return $this->children;
 	}
 }
+
 class HtmlNav {
 	public $config = array();
 
@@ -95,7 +98,6 @@ class HtmlNav {
 }
 
 
-
 function generateNavigationBar() {
 	$rows = db();
 	$nodes = array();
@@ -112,14 +114,11 @@ function generateNavigationBar() {
 	}
 	
 
-	
-	
-
 	$nav = new HtmlNav();
 
 	$nav->config = array(
 			'li_with_child_no_father_open' => function($node) {
-				$result = '<li><a href="#" >';
+				$result = '<li class="has-dropdown not-click"><a href="#">';
 				$result .= $node->title;
 				$result .= '</a>';
 				return $result;
@@ -129,7 +128,7 @@ function generateNavigationBar() {
 				return $result;
 			},
 			'li_with_child_with_father_open' => function($node) {
-				$result = '<li ><a href="#">';
+				$result = '<li class="has-dropdown not-click"><a href="#">';
 				$result .= $node->title;
 				$result .= '</a>';
 				return $result;
@@ -139,7 +138,7 @@ function generateNavigationBar() {
 				return $result;
 			},	
 			'child_ul_open' => function($node) {
-				$result = '<ul >';
+				$result = '<ul class="dropdown">';
 				return $result;
 			},
 			'child_ul_close' => function($node) {
@@ -156,16 +155,34 @@ function generateNavigationBar() {
 
 		);
 
-
+/*	$nav->config = array(
+		'li_with_child_prefix_no_father' => function($link) {
+			return '<li class="has-dropdown not-click"><a href="'.$link.'">';
+		},
+		'li_with_child_postfix_no_father' => function() {
+			return '</a></li>';
+		},
+		'li_with_child_prefix' => function($link) {
+			return '<li class="has-dropdown not-click"><a href="'.$link.'">';
+		},
+		'li_with_child_postfix' => function() {
+			return '</a></li>';
+		},
+		'child_ul_prefix' => '<ul class="dropdown">',
+		'child_ul_postfix' => '</ul>',
+		'li_no_child_prefix' =>'<li>',
+		'li_no_child_postfix' => '</li>',
+		);*/
 	
 	foreach ($nodes as $node) {
 		if ($node->pid == 0) {
 			$nav->generate($node);
 		}
-	}	
-	
-	
+	}
+		
 	
 	
 }
+
+
 
