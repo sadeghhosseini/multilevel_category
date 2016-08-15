@@ -3,7 +3,11 @@
 /**
 *Returns all the columns from category table
 */
-function db($servername = "localhost", $username = "root", $password = "", $dbname = "test_taxonomy") {
+function db() {
+	$servername = "localhost";
+	$username = "root"; 
+	$password = "";
+	$dbname = "test_taxonomy";
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
