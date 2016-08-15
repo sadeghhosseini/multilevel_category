@@ -1,4 +1,5 @@
-<?php require_once('./includes/nav.php'); ?>
+<?php require_once ('./includes/nav_config.php') ?>
+<?php require_once('./includes/nav.php');  ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,16 @@
   
 <section class="top-bar-section">
     <ul class="left">
-      <?php generateNavigationBar(); ?>
+        <?php 
+            $DB_CONFIG = array(
+              'servername' => "localhost",
+              'username' => "root", 
+              'password' => "",
+              'dbname' => "test_taxonomy",
+              'the_table'=>'categories',
+            );
+            generateNavigationBar($nav_config, get_all_categories($DB_CONFIG)); 
+            ?>
     </ul>
     <!-- Right Nav Section -->
 <!--     <ul class="right">

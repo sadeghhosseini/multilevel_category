@@ -1,22 +1,22 @@
 <?php
 
+/**
+*Returns all the columns from category table
+*/
+function get_all_categories($db_config) {
 
-function db() {
-	$servername = "localhost";
-	$username = "root"; 
-	$password = "";
-	$dbname = "test_taxonomy";
-	$conn = new mysqli($servername, $username, $password, $dbname);
+	$conn = new mysqli($db_config['servername'], $db_config['username'], $db_config['password'], $db_config['dbname']);
 	if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
 	} 
 
-	$sql = "SELECT * FROM categories";
+	$sql = "SELECT * FROM " . $db_config['the_table'];
 	$result = $conn->query($sql);
 
 	
 	return mysqli_fetch_all ($result, MYSQLI_ASSOC);
 }
+
 
 
 
@@ -128,10 +128,7 @@ class HtmlNav {
 
 
 
-
-
-function generateNavigationBar() {
-	$rows = db();
+function generateNavigationBar($nav_config, $rows) {
 	$nodes = array();
 	foreach($rows as $row) {
 		$nodes[] = new Node($row['id'], $row['pid'], $row['title']);
@@ -144,51 +141,12 @@ function generateNavigationBar() {
 			}
 		}
 	}
-	
 
 	
-
 
 	$nav = new HtmlNav();
 
-	$nav->config = array(
-			'li_with_child_no_father_open' => function($node) {
-				$result = '<li><a href="#" >';
-				$result .= $node->title;
-				$result .= '</a>';
-				return $result;
-			},
-			'li_with_child_no_father_close' => function($node) {
-				$result = '</li>';
-				return $result;
-			},
-			'li_with_child_with_father_open' => function($node) {
-				$result = '<li ><a href="#">';
-				$result .= $node->title;
-				$result .= '</a>';
-				return $result;
-			},
-			'li_with_child_with_father_close' => function($node) {
-				$result = '</li>';
-				return $result;
-			},	
-			'child_ul_open' => function($node) {
-				$result = '<ul >';
-				return $result;
-			},
-			'child_ul_close' => function($node) {
-				$result = '</ul>';
-				return $result;
-			},	
-			'li_no_child_open' => function($node) {
-				$result = '<li><a href="#">';
-				$result .= $node->title;
-				$result .= '</a></li>';
-				return $result;
-			},
-
-
-		);
+	$nav->config = $nav_config;
 
 
 	
@@ -196,9 +154,7 @@ function generateNavigationBar() {
 		if ($node->pid == 0) {
 			$nav->generate($node);
 		}
-	}		
-	
-	
+	}	
 	
 	
 }
