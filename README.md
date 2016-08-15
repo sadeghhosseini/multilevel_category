@@ -79,7 +79,7 @@ $DB_CONFIG = array(
 usage2:
 ofcourse you can easily use this project as menu generator in your own project the steps will be as follows and you just have to 
 change contents of includes/nav\_config.php. for example let's say you are using a css framework that needs html of menu be like this:
-
+```
 <pre>
 <code>
 <ul class="drop-down">
@@ -100,6 +100,7 @@ change contents of includes/nav\_config.php. for example let's say you are using
 </ul>
 </code>
 </pre>
+```
 
 This means that root li elements should have class="root-child" and ul elements that are child of li elements should have class="child-drop-down" and li elements with no child should have class="no-child". then you can configure project to generate
 the html of menu(as explained),  based on database by modifying includes/nav_config.php file:
