@@ -4,7 +4,7 @@ Multilevel category for your website.
 there are 4 folders in this repository:
 
 
-1. plain just shows categories as simple <ul> and <li>
+1. plain just shows categories as simple html lists without css or js
 2. bootstrap_impl is an example using bootstrap and jquery to create multi level navigation bar i used this https://github.com/fontenele/bootstrap-navbar-dropdowns to show the output. 
 3. plain_css this is another example that get's the plain html output of nav.php and use css to create navbar,  i used http://www.cssscript.com/create-a-multi-level-drop-down-menu-with-pure-css/.
 4. responsive_nav this is same as 3 but responsive(jquery and css has been used)
