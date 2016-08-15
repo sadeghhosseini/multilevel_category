@@ -22,7 +22,7 @@ $sql = "SELECT * FROM categories";
 which is in the same function.
 
 follwing is the categories table which is populated with default values for show case.
-
+<pre>
 | id              |  pid           | title            
 ——————————————————————————————————————————————————————————————
 | 1               |  0             | genre                   |      
@@ -41,6 +41,47 @@ follwing is the categories table which is populated with default values for show
 | 14              |  5             | Friends                 |
 | 15              |  5             | How I met your mother   |
 ——————————————————————————————————————————————————————————————
+</pre>
+
+usage:
+1. import plain/db/categories.sql to mysql database(let's say the name of the database that you created is xyz)
+2. copy and paste one of the examples(let's say bootstrap_impl) to your web server
+3. chage db configuration in db function in includes/nav.php(this file exists in all example folder), let's say your database user's username="root" and password="2" and the name of database that you have created is my_db then youe should change 
+function db() {
+	$servername = "localhost";
+	$username = "root"; 
+	$password = "";
+	$dbname = "test_taxonomy";
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	} 
+
+	$sql = "SELECT * FROM categories";
+	$result = $conn->query($sql);
+
+	
+	return mysqli_fetch_all ($result, MYSQLI_ASSOC);
+}
+
+
+to
+function db() {
+	$servername = "localhost";
+	$username = "root"; 
+	$password = "2";
+	$dbname = "my_db";
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	} 
+
+	$sql = "SELECT * FROM categories";//change this if your table name is anything but categories
+	$result = $conn->query($sql);
+
+	
+	return mysqli_fetch_all ($result, MYSQLI_ASSOC);
+}
 
 
 
