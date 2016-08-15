@@ -13,6 +13,7 @@ you can find sql file for the table in db folder that exists in each of the 4 fo
 you should import it to mysql database named test_taxonomy of course
 you can change the table and database to whatever you want but in order to do that 
 you should change these local variables
+<pre><code>
 $servername = "localhost"; 
 $username = "root"; 
 $password = ""; 
@@ -20,7 +21,7 @@ $dbname = "test_taxonomy";
 in db function in includes/nav.php file and also 
 $sql = "SELECT * FROM categories";
 which is in the same function.
-
+</code></pre>
 follwing is the categories table which is populated with default values for show case.
 <pre>
 | id              |  pid           | title            
@@ -43,10 +44,12 @@ follwing is the categories table which is populated with default values for show
 ——————————————————————————————————————————————————————————————
 </pre>
 
-usage:
+**usage:
 1. import plain/db/categories.sql to mysql database(let's say the name of the database that you created is xyz)
 2. copy and paste one of the examples(let's say bootstrap_impl) to your web server
 3. chage db configuration in db function in includes/nav.php(this file exists in all example folder), let's say your database user's username="root" and password="2" and the name of database that you have created is my_db then youe should change 
+<pre>
+<code>
 function db() {
 	$servername = "localhost";
 	$username = "root"; 
@@ -63,9 +66,11 @@ function db() {
 	
 	return mysqli_fetch_all ($result, MYSQLI_ASSOC);
 }
-
-
+</code>
+</pre>
 to
+<pre>
+<code>
 function db() {
 	$servername = "localhost";
 	$username = "root"; 
@@ -82,7 +87,7 @@ function db() {
 	
 	return mysqli_fetch_all ($result, MYSQLI_ASSOC);
 }
-
-
+</code>
+</pre>
 
 
