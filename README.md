@@ -2,6 +2,8 @@
 
 Multilevel category for your website.
 there are 4 folders in this repository:
+
+
 1. plain just shows categories as simple <ul> and <li>
 2. bootstrap_impl is an example using bootstrap and jquery to create multi level navigation bar i used this https://github.com/fontenele/bootstrap-navbar-dropdowns to show the output. 
 3. plain_css this is another example that get's the plain html output of nav.php and use css to create navbar,  i used http://www.cssscript.com/create-a-multi-level-drop-down-menu-with-pure-css/.
@@ -44,7 +46,9 @@ follwing is the categories table which is populated with default values for show
 ——————————————————————————————————————————————————————————————
 </pre>
 
-**usage:
+##usage:
+
+
 1. import plain/db/categories.sql to mysql database(let's say the name of the database that you created is xyz)
 2. copy and paste one of the examples(let's say bootstrap_impl) to your web server
 3. chage db configuration in db function in includes/nav.php(this file exists in all example folder), let's say your database user's username="root" and password="2" and the name of database that you have created is my_db then youe should change 
